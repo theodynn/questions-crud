@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row">
+    <h2 class="m-3">{{isEdit ? 'Edit' : 'Add'}} Question Page</h2>
+  </div>
+  <form (ngSubmit)="submit()" [formGroup]="questionForm">
+    <div class="mb-3">
+      <label for="questionType" class="form-label">Choose question type</label>
+      <select
+        class="custom-select m-lg-2"
+        (change)="changeType($event)"
+        formControlName="type"
+        id="questionType"
+      >
+      <option *ngFor="let type of types" [ngValue]="type">
+        {{ type }}
+      </option>
+    </select>
+    </div>
+    <div class="mb-3">
+      <label for="txtQuestion" class="form-label">Question</label>
+      <input
+        type="text"
+        class="form-control"
+        id="txtQuestion"
+        formControlName="question"
+      />
+    </div>
+    <div class="mb-3" *ngIf="type !== 'open'">
+      <button type="button" class="btn btn-dark" (click)="addOption()">Add option</button>  
+    </div>
+    <div formArrayName="options">
+      <div class="notopen" *ngIf="type !== 'open'">
+        <div class="mb-3" *ngFor="let optionForm of options.controls; let i = index">
+          <div [formGroupName]="i">
+            <label [for]="'txtOption'+ i" class="form-label">{{i + 1}}. Answer Option</label>
+            <input
+              type="text"
+              class="form-control"
+              [id]="'txtOption' + i"
+              formControlName="option"
+            />
+            <label *ngIf="type === 'multiple'" [for]="'txtCheckbox'+ i" class="mt-1">Correct answer</label>
+            <input
+              *ngIf="type === 'multiple'"
+              type="checkbox"
+              class="m-lg-2 form-check-input"
+              [id]="'txtCheckbox' + i"
+              (change)="changeAnswer($event, i)"
+              formControlName="checkbox"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="nopen"  *ngIf="type === 'open'">
+        <div class="mb-3" *ngFor="let opt of options.controls; let i = index">
+          <div [formGroupName]="i">
+            <label [for]="'txtarea'+ i" class="form-label">Answer</label>
+            <input
+              type="text"
+              class="form-control"
+              [id]="'txtarea' + i"
+              formControlName="option"
+              (change)="changeAnswer($event, i)"
+            />
+          </div>
+        </div>
+      </div> 
+    </div>
+    
+    <div class="mb-3" *ngIf="type === 'single'">
+      <select
+        class="custom-select"
+        (change)="changeAnswer($event)"
+        formControlName="selectedAnswer"
+      >
+      <option value="">Choose answer</option>
+      <option [value]="i" *ngFor="let question of options.value; let i = index">
+        {{ question.option }}
+      </option>
+    </select>
+    
+    </div>
+    <button type="submit" class="btn btn-dark" [disabled]="!questionForm.valid || !customValidate()">Create</button>
+    <div class="mt-3 alert alert-danger" *ngIf="!customValidate()">
+      Question should have at least two options and selected answer
+    </div>
+  </form>
+</div>

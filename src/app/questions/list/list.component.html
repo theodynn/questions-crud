@@ -1,0 +1,103 @@
+<div class="container mt-2">
+  <div class="row">
+    <h2 class="m-3">List of Questions Page</h2>
+  </div>
+  <div class="row row-cols-1 justify-content-around row-cols-md-3 g-4 mt-2">
+    <div class="col">
+      <div class="col" *ngFor="let question of questions$ | async | searchFilter: questions$: false;">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ question.question }}</h5>
+          </div>
+          <div class="card-body">
+            <div *ngIf="question.type === 'single'">
+              <div *ngFor="let option of question.options; let i = index;">
+                <label [for]="'txtRadio'+ i" class="mt-1">{{i + 1}}. {{option}}</label>
+                <input
+                  type="radio"
+                  class="m-lg-2 form-check-input"
+                  [id]="'txtRadio' + i"
+                  [value]="i"
+                  [(ngModel)]="answers[question.id.toString()][0]"
+                />
+              </div>
+            </div>
+            <div *ngIf="question.type === 'multiple'">
+              <div *ngFor="let option of question.options; let i = index;">
+                <label [for]="'txtCheckbox'+ i" class="mt-1">{{i + 1}}. {{option}}</label>
+                <input
+                  type="checkbox"
+                  class="m-lg-2 form-check-input"
+                  [id]="'txtCheckbox' + i"
+                  [(ngModel)]="checkboxes[question.id.toString()][i]"
+                  (change)="changeAnswer(question.id, i)"
+                />
+              </div>
+            </div>
+            <div *ngIf="question.type === 'open'">
+              <div>
+                <label [for]="'txtArea' + question.id" class="mt-1">Please answer below</label>
+                <textarea
+                  [id]="'txtArea' + question.id"
+                  [(ngModel)]="answers[question.id.toString()][0]"
+                ></textarea>  
+              </div>
+            </div>
+            <button (click)="storeAnswer(question.id, false)" class="btn btn-dark"
+              >Answer Question</button
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="col" *ngFor="let question of questions$ | async | searchFilter: questions$: true;">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ question.question }}</h5>
+          </div>
+          <div class="card-body">
+            <div *ngIf="question.type === 'single'">
+              <div *ngFor="let option of question.options; let i1= index;">
+                <label [for]="'txtRadio'+ i1" class="mt-1">{{i1 + 1}}. {{option}}</label>
+                <input
+                  type="radio"
+                  class="m-lg-2 form-check-input"
+                  [id]="'txtRadio' + i1"
+                  [value]="i1"
+                  [(ngModel)]="answers[question.id.toString()][0]"
+                  disabled="true"
+                />
+              </div>
+            </div>
+            <div *ngIf="question.type === 'multiple'">
+              <div *ngFor="let option of question.options; let i1 = index;">
+                <label [for]="'txtCheckbox'+ i1" class="mt-1">{{i1 + 1}}. {{option}}</label>
+                <input
+                  type="checkbox"
+                  class="m-lg-2 form-check-input"
+                  [id]="'txtCheckbox' + i1"
+                  [(ngModel)]="checkboxes[question.id.toString()][i1]"
+                  disabled="true"
+                />
+              </div>
+            </div>
+            <div *ngIf="question.type === 'open'">
+              <div>
+                <label [for]="'txtArea' + question.id" class="mt-1">Please answer below</label>
+                <textarea
+                  [id]="'txtArea' + question.id"
+                  [(ngModel)]="answers[question.id.toString()][0]"
+                  disabled="true"
+                ></textarea>  
+              </div>
+            </div>
+            <button (click)="storeAnswer(question.id, true)" class="btn btn-dark"
+              >Delete Answer</button
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
