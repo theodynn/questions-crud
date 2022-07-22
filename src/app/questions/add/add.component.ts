@@ -54,7 +54,7 @@ export class AddComponent implements OnInit {
         data.options.forEach((el: string, id: number) => {
           this.addOption(el, id, data.answers);
         });
-        this.answers = data.answers;
+        this.answers = [...data.answers];
         if(data.type === 'single'){
           this.questionForm.patchValue({
             selectedAnswer: data.answers[0]
