@@ -80,7 +80,7 @@
     </select>
     
     </div>
-    <button type="submit" class="btn btn-dark" [disabled]="!questionForm.valid || !customValidate()">Create</button>
+    <button type="submit" class="btn btn-dark" [disabled]="!questionForm.valid || !customValidate()">{{isEdit ? 'Edit' : 'Add'}}</button>
     <div class="mt-3 alert alert-danger" *ngIf="!customValidate()">
       Question should have at least two options and selected answer
     </div>

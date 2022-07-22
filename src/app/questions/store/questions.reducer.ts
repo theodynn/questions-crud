@@ -2,10 +2,10 @@ import { createReducer, on } from '@ngrx/store';
 import { Questions } from './questions';
 import { questionsFetchAPISuccess, deleteQuestionAPISuccess, saveNewQuestionAPISucess, updateQuestionAPISucess } from './questions.action';
 
-
-export const initialState: any = JSON.parse(localStorage.getItem('store') || '') || [
+let storeString = localStorage.getItem('store');
+export const initialState: any = storeString ? JSON.parse(storeString) : [
   {
-    id: 1,
+    id: 1658508625326,
     type:'single',
     question: 'What is my favorite color?',
     options: ['red', 'green', 'blue'],
@@ -13,7 +13,7 @@ export const initialState: any = JSON.parse(localStorage.getItem('store') || '')
     state: []
   },
   {
-    id: 2,
+    id: 1658508625327,
     type: 'multiple',
     question: 'What is the temperature of ice melting?',
     options: ['100 C', '100 F', '212 F'],
@@ -21,7 +21,7 @@ export const initialState: any = JSON.parse(localStorage.getItem('store') || '')
     state: []
   },
   {
-    id: 3,
+    id: 16585086253268,
     type: 'open',
     question: '2 + 2?',
     options: [],

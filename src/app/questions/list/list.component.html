@@ -58,12 +58,12 @@
           </div>
           <div class="card-body">
             <div *ngIf="question.type === 'single'">
-              <div *ngFor="let option of question.options; let i1= index;">
-                <label [for]="'txtRadio'+ i1" class="mt-1">{{i1 + 1}}. {{option}}</label>
+              <div *ngFor="let option of question.options; let i1 = index;">
+                <label [for]="'txtRadio1'+ i1" class="mt-1">{{i1 + 1}}. {{option}}</label>
                 <input
                   type="radio"
                   class="m-lg-2 form-check-input"
-                  [id]="'txtRadio' + i1"
+                  [id]="'txtRadio1' + i1"
                   [value]="i1"
                   [(ngModel)]="answers[question.id.toString()][0]"
                   disabled="true"
@@ -72,11 +72,11 @@
             </div>
             <div *ngIf="question.type === 'multiple'">
               <div *ngFor="let option of question.options; let i1 = index;">
-                <label [for]="'txtCheckbox'+ i1" class="mt-1">{{i1 + 1}}. {{option}}</label>
+                <label [for]="'txtCheckbox1'+ i1" class="mt-1">{{i1 + 1}}. {{option}}</label>
                 <input
                   type="checkbox"
                   class="m-lg-2 form-check-input"
-                  [id]="'txtCheckbox' + i1"
+                  [id]="'txtCheckbox1' + i1"
                   [(ngModel)]="checkboxes[question.id.toString()][i1]"
                   disabled="true"
                 />
@@ -84,9 +84,9 @@
             </div>
             <div *ngIf="question.type === 'open'">
               <div>
-                <label [for]="'txtArea' + question.id" class="mt-1">Please answer below</label>
+                <label [for]="'txtArea1' + question.id" class="mt-1">Please answer below</label>
                 <textarea
-                  [id]="'txtArea' + question.id"
+                  [id]="'txtArea1' + question.id"
                   [(ngModel)]="answers[question.id.toString()][0]"
                   disabled="true"
                 ></textarea>  

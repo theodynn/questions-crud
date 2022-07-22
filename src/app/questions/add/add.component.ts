@@ -120,8 +120,11 @@ export class AddComponent implements OnInit {
   submit() {
     let payload: Questions = {
       id: (new Date()).getTime(),
-      ...this.questionForm.value,
+      question: this.questionForm.value.question,
+      options: this.questionForm.value.options,
+      type: this.questionForm.value.type,
       answers: this.answers,
+      state: []
     };
     payload.options = this.questionForm.value.options?.map((el: any) => el.option)
     this.isEdit ? this.update(payload) : this.save(payload);
@@ -129,13 +132,13 @@ export class AddComponent implements OnInit {
   
   save(payload: Questions) {
     this.store.dispatch(invokeSaveNewQuestionAPI({ newQuestion: payload }));
+    this.router.navigate(['/']);
     let apiStatus$ = this.appStore.pipe(select(selectAppState));
     apiStatus$.subscribe((apState) => {
       if (apState.apiStatus == 'success') {
         this.appStore.dispatch(
           setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: '' } })
         );
-         this.router.navigate(['/']);
       }
     });
   }
@@ -144,14 +147,13 @@ export class AddComponent implements OnInit {
     this.store.dispatch(
       invokeUpdateQuestionAPI({ updateQuestion: payload })
     );
-
+    this.router.navigate(['/']);
     let apiStatus$ = this.appStore.pipe(select(selectAppState));
     apiStatus$.subscribe((apState) => {
       if (apState.apiStatus == 'success') {
         this.appStore.dispatch(
           setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: '' } })
         );
-        this.router.navigate(['/']);
       }
     });
   }
