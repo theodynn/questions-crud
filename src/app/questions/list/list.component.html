@@ -92,6 +92,9 @@
                 ></textarea>  
               </div>
             </div>
+            <div class="mb-2 is-correct">
+              {{ isCorrect(question) }}
+            </div>
             <button (click)="storeAnswer(question.id, true)" class="btn btn-dark"
               >Delete Answer</button
             >

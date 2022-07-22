@@ -82,6 +82,20 @@ export class ListComponent implements OnInit {
     });
   }
 
+  isCorrect(question: Questions){
+    const equalsIgnoreOrder = (a: any, b: any) => {
+      if (a.length !== b.length) return false;
+      const uniqueValues = new Set([...a, ...b]);
+      for (const v of uniqueValues) {
+        const aCount = a.filter((e: any) => e === v).length;
+        const bCount = b.filter((e: any) => e === v).length;
+        if (aCount !== bCount) return false;
+      }
+      return true;
+    }
+    return equalsIgnoreOrder(question.answers, question.state) ? 'Correct' : 'Incorrect'
+  }
+
   toDate(id: number){
     let d = new Date(id);
     return `${d.toDateString()}`
